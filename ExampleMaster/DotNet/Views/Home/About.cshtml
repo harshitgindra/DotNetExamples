@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<input type="button" value="Stop Background Task" class="btn btn-primary" id="stop-task" />
+
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#stop-task").on("click", function () {
+                $.ajax({
+                    url: 'StopTask',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert('Data:');
+                    },
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+

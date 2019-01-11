@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<input type="button" value="Start Background Task" class="btn btn-primary" id="start-task" />
+
+
+<input type="button" value="Stop Background Task" class="btn btn-primary" id="stop-task" />
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#start-task").on("click", function () {
+                $.ajax({
+
+                    url: 'Home/StartTask',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert('Data:');
+                    },
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            });
+
+            $("#stop-task").on("click", function () {
+                $.ajax({
+                    url: 'Home/StopTask',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert('Data:');
+                    },
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+            });
+        });
+    </script>
+}
