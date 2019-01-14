@@ -1,0 +1,12 @@
+﻿@page
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="container">
+    <br />
+    <input type="button" value="Start Task" class="btn btn-primary" id="start-task" />
+    <input type="button" value="Stop Task" class="btn btn-primary" id="stop-task" />
+
+    <ul id="tasks"></ul>
+</div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>

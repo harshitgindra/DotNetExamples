@@ -1,7 +1,5 @@
 ﻿using DotNet.Core;
 using DotNet.SignalR;
-using Microsoft.AspNet.SignalR;
-using System.Diagnostics;
 using System.Threading;
 using System.Web.Mvc;
 
@@ -33,8 +31,6 @@ namespace DotNet.Controllers
                     break;
                 }
             }
-
-            TaskHub.TaskUpdate($"All Loops complete");
         }
 
         [HttpPost]
