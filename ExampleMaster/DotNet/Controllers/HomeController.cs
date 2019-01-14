@@ -11,11 +11,6 @@ namespace DotNet.Controllers
     {
         public CancellationTokenSource TokenSource;
 
-        public HomeController()
-        {
-
-        }
-
         public ActionResult Index()
         {
             return View();
@@ -25,7 +20,6 @@ namespace DotNet.Controllers
         public void StartTask()
         {
             AppConstants.TokenSource = new CancellationTokenSource();
-            //context.Clients.All.Send("Admin", "stop the chat");
             for (int i = 0; i < 20; i++)
             {
                 if (!AppConstants.TokenSource.Token.IsCancellationRequested)
