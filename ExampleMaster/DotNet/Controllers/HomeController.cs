@@ -1,4 +1,6 @@
 ﻿using DotNet.Core;
+using DotNet.SignalR;
+using Microsoft.AspNet.SignalR;
 using System.Diagnostics;
 using System.Threading;
 using System.Web.Mvc;
@@ -23,19 +25,22 @@ namespace DotNet.Controllers
         public void StartTask()
         {
             AppConstants.TokenSource = new CancellationTokenSource();
+            //context.Clients.All.Send("Admin", "stop the chat");
             for (int i = 0; i < 20; i++)
             {
                 if (!AppConstants.TokenSource.Token.IsCancellationRequested)
                 {
-                    Debug.WriteLine($"Loop:{i}");
+                    TaskHub.TaskUpdate($"Loop:{i}");
                     Thread.Sleep(2000);
                 }
                 else
                 {
-                    Debug.WriteLine($"Cancellation Token Requested");
+                    TaskHub.TaskUpdate($"Loop stopped");
                     break;
                 }
             }
+
+            TaskHub.TaskUpdate($"All Loops complete");
         }
 
         [HttpPost]
@@ -43,6 +48,7 @@ namespace DotNet.Controllers
         {
             if (AppConstants.TokenSource != null)
             {
+                TaskHub.TaskUpdate($"Cancel Tasks requested");
                 AppConstants.TokenSource.Cancel();
             }
         }

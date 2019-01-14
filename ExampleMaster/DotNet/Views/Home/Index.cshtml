@@ -2,26 +2,37 @@
     ViewBag.Title = "Home Page";
 }
 
-
-<input type="button" value="Start Background Task" class="btn btn-primary" id="start-task" />
-
-
-<input type="button" value="Stop Background Task" class="btn btn-primary" id="stop-task" />
+<br />
+<input type="button" value="Start Task" class="btn btn-primary" id="start-task" />
+<input type="button" value="Stop Task" class="btn btn-primary" id="stop-task" />
+<br />
+<ul id="tasks"></ul>
 
 @section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
     <script>
-        $(document).ready(function () {
+        $(function () {
+            var chat = $.connection.TaskHub;
+
+            chat.client.taskUpdate = function (message) {
+                $('#tasks').append('<li><strong>' + htmlEncode(message)
+                    + '</strong></li>');
+            };
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                console.log('Hub Started');
+            });
+
             $("#start-task").on("click", function () {
                 $.ajax({
-
                     url: 'Home/StartTask',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
                         alert('Data:');
-                    },
-                    error: function (request, error) {
-                        alert("Request: " + JSON.stringify(request));
                     }
                 });
             });
@@ -33,12 +44,14 @@
                     dataType: 'json',
                     success: function (data) {
                         alert('Data:');
-                    },
-                    error: function (request, error) {
-                        alert("Request: " + JSON.stringify(request));
                     }
                 });
             });
+
+            function htmlEncode(value) {
+                var encodedValue = $('<div />').text(value).html();
+                return encodedValue;
+            }
         });
     </script>
 }
